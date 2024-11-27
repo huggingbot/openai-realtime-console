@@ -10,6 +10,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   iconColor?: 'red' | 'green' | 'grey';
   iconFill?: boolean;
   buttonStyle?: 'regular' | 'action' | 'alert' | 'flush';
+  onTouchStart?: (e: React.TouchEvent) => void;
+  onTouchEnd?: (e: React.TouchEvent) => void;
 }
 
 export function Button({
@@ -19,6 +21,8 @@ export function Button({
   iconColor = void 0,
   iconFill = false,
   buttonStyle = 'regular',
+  onTouchStart,
+  onTouchEnd,
   ...rest
 }: ButtonProps) {
   const StartIcon = iconPosition === 'start' ? icon : null;
@@ -33,7 +37,13 @@ export function Button({
   classList.push(`button-style-${buttonStyle}`);
 
   return (
-    <button data-component="Button" className={classList.join(' ')} {...rest}>
+    <button
+      data-component="Button"
+      className={classList.join(' ')}
+      {...rest}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
       {StartIcon && (
         <span className="icon icon-start">
           <StartIcon />
